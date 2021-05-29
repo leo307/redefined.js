@@ -102,7 +102,7 @@ function red_draw () {
 
     /* UI Vars */
     var rage_dt = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Rage] Doubletap Methods"]);
-    var aa_level = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Anti-Aim] Level"]);
+    var aa_level = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Anti-Aim] Anti-Aim Level"]);
     var beg_presets = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Beginner] Anti-Aim Presets"]);
     var beg_slowwalk = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Beginner] Slowwalk Speed"]);
     var int_presets = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Anti-Aim Presets"]);
@@ -116,7 +116,8 @@ function red_draw () {
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Watermark"], 1);
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Ragebot Monitor"], 1);
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Anti-Aim Monitor"], 1);
-            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Rage - DT] Custom Speed"], 1);
+            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Rage - DT] Custom Speed"], 0);
+            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Anti-Aim] Anti-Aim Level"], 0);
         } break;
         case 2: { /* Rage */
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Redefined] Rage Enabled"], 1);
@@ -124,9 +125,10 @@ function red_draw () {
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Rage] Doubletap Methods"], 1);
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Rage] Visible Minimum Damage"], 1);
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Rage] Autowall Minimum Damage"], 1);
+            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Anti-Aim] Anti-Aim Level"], 0);
         } break;
         case 3: { /* Anti-Aim */
-            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Rage - DT] Custom Speed"], 1);
+            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Rage - DT] Custom Speed"], 0);
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Redefined] Anti-Aim Enabled"], 1);
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Anti-Aim] Anti-Aim Level"], 1);
         } break;
@@ -195,7 +197,7 @@ function red_createmove () {
     var rage_dt = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Rage] Doubletap Methods"]);
     var rage_dtspeed = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Rage - DT] Custom Speed"]);
     var aa_enabled = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Redefined] Anti-Aim Enabled"]);
-    var aa_level = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Anti-Aim] Level"]);
+    var aa_level = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Anti-Aim] Anti-Aim Level"]);
     var beg_presets = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Beginner] Anti-Aim Presets"]);
     var beg_slowwalk = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Beginner] Slowwalk Speed"]);
     var int_presets = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Anti-Aim Presets"]);
