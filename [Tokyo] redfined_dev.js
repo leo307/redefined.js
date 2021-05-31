@@ -11,6 +11,7 @@
     UI.AddCheckbox(["Misc.", "[Redefined.js]", "[Redefined.js]"], "Watermark");
     UI.AddCheckbox(["Misc.", "[Redefined.js]", "[Redefined.js]"], "Ragebot Monitor");
     UI.AddCheckbox(["Misc.", "[Redefined.js]", "[Redefined.js]"], "Anti-Aim Monitor");
+    UI.AddCheckbox(["Misc.", "[Redefined.js]", "[Redefined.js]"], "Flags");
     
     /* Rage */ 
     UI.AddCheckbox(["Misc.", "[Redefined.js]", "[Redefined.js]"], "[Redefined] Rage Enabled");
@@ -78,6 +79,7 @@ function red_draw () {
     UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Watermark"], 0);
     UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Ragebot Monitor"], 0);
     UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Anti-Aim Monitor"], 0);
+    UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Flags"], 0);
     
     /* Rage */
     UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Redefined] Rage Enabled"], 0);
@@ -135,6 +137,7 @@ function red_draw () {
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Watermark"], 1);
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Ragebot Monitor"], 1);
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Anti-Aim Monitor"], 1);
+            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Flags"], 1);
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Rage - DT] Custom Speed"], 0);
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Redefined] Anti-Aim Enabled"], 0);
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Anti-Aim] Anti-Aim Level"], 0);
@@ -170,44 +173,54 @@ function red_draw () {
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Rage - DT] Custom Speed"], 0);
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Redefined] Anti-Aim Enabled"], 1);
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Anti-Aim] Anti-Aim Level"], 1);
+            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Beginner] Anti-Aim Presets"], 0);
+            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Beginner] Slowwalk Speed"], 0);
+            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Anti-Aim Presets"], 0);
+            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Custom Desync"], 0);
+            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Slowwalk"], 0);
+            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Fake"], 0);
+            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Real"], 0);
+            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] LBY"], 0);
+            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Slowwalk"], 0);
+            /* Anti-Aim Levels */{
+            /* Here we want to do if/else statements and not a switch, because we want to disable the UI if not in that tab */
+            if(aa_level == 0){ /* Off */
+
+            } else{
+
+            }
+            if(aa_level == 1){ /* Beginner */
+                UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Beginner] Anti-Aim Presets"], 1);
+                UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Beginner] Slowwalk Speed"], 1);
+            } else{
+                UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Beginner] Anti-Aim Presets"], 0);
+                UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Beginner] Slowwalk Speed"], 0);
+            }
+            if(aa_level == 2){ /* Intermediate */
+                UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Anti-Aim Presets"], 1);
+                UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Custom Desync"], 1);
+                UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Slowwalk"], 1);
+            } else{
+                UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Anti-Aim Presets"], 0);
+                UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Custom Desync"], 0);
+                UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Slowwalk"], 0);
+            }
+            if(aa_level == 3){ /* Pro */
+                UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Fake"], 1);
+                UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Real"], 1);
+                UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] LBY"], 1);
+                UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Slowwalk"], 1);
+            } else{
+                UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Fake"], 0);
+                UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Real"], 0);
+                UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] LBY"], 0);
+                UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Slowwalk"], 0);
+    }
+    }
+
+            
         } break;
 
-    }
-
-        /* Anti-Aim Levels */{
-    /* Here we want to do if/else statements and not a switch, because we want to disable the UI if not in that tab */
-    if(aa_level == 0){ /* Off */
-
-    } else{
-
-    }
-    if(aa_level == 1){ /* Beginner */
-        UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Beginner] Anti-Aim Presets"], 1);
-        UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Beginner] Slowwalk Speed"], 1);
-    } else{
-        UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Beginner] Anti-Aim Presets"], 0);
-        UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Beginner] Slowwalk Speed"], 0);
-    }
-    if(aa_level == 2){ /* Intermediate */
-        UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Anti-Aim Presets"], 1);
-        UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Custom Desync"], 1);
-        UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Slowwalk"], 1);
-    } else{
-        UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Anti-Aim Presets"], 0);
-        UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Custom Desync"], 0);
-        UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Slowwalk"], 0);
-    }
-    if(aa_level == 3){ /* Pro */
-        UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Fake"], 1);
-        UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Real"], 1);
-        UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] LBY"], 1);
-        UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Slowwalk"], 1);
-    } else{
-        UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Fake"], 0);
-        UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Real"], 0);
-        UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] LBY"], 0);
-        UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Slowwalk"], 0);
-    }
     }
 
 
