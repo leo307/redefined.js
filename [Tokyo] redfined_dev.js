@@ -44,7 +44,6 @@
 
 /* Utilities */{
 
-    /* Classic RGB Conversion */
     /* var rainbow_clr = HSVtoRGB(Globals.Realtime() / 3 % 1, 1, 1); */
     /* [rainbow_clr[0], rainbow_clr[1], rainbow_clr[2], rainbow_clr[3]] */
     function HSVtoRGB(h, s, v) {
