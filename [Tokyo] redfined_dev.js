@@ -5,10 +5,11 @@
     /* Create Subtab */
     UI.AddSubTab(["Misc.", "SUBTAB_MGR"], "[Redefined.js]");
     /* Add Tab Selection */
-    UI.AddDropdown(["Misc.", "[Redefined.js]", "[Redefined.js]",], "[Redefined.js] Tab Selection", ["Off", "Extra", "Rage", "Anti-Aim"], 0);
+    UI.AddDropdown(["Misc.", "[Redefined.js]", "[Redefined.js]",], "[Redefined.js] Tab Selection", ["Off", "Extra", "Rage", "Anti-Aim", "Config"], 0);
     
     /* Extra */
     UI.AddCheckbox(["Misc.", "[Redefined.js]", "[Redefined.js]"], "Watermark");
+    UI.AddCheckbox(["Misc.", "[Redefined.js]", "[Redefined.js]"], "Clantag");
     UI.AddCheckbox(["Misc.", "[Redefined.js]", "[Redefined.js]"], "Ragebot Monitor");
     UI.AddCheckbox(["Misc.", "[Redefined.js]", "[Redefined.js]"], "Anti-Aim Monitor");
     UI.AddCheckbox(["Misc.", "[Redefined.js]", "[Redefined.js]"], "Flags");
@@ -36,6 +37,10 @@
     UI.AddSliderInt(["Misc.", "[Redefined.js]", "[Redefined.js]",], "[AA - Pro] Real", -60, 60);
     UI.AddSliderInt(["Misc.", "[Redefined.js]", "[Redefined.js]",], "[AA - Pro] LBY", -60, 60);
     UI.AddSliderInt(["Misc.", "[Redefined.js]", "[Redefined.js]",], "[AA - Pro] Slowwalk", 1, 100);
+
+    /* Config */
+    UI.AddCheckbox(["Misc.", "[Redefined.js]", "[Redefined.js]"], "Save Script Settings");
+    UI.AddCheckbox(["Misc.", "[Redefined.js]", "[Redefined.js]"], "Load Script Settings");
 }
 
 /* Utilities */{
@@ -67,16 +72,23 @@
     function get_dpi_scale () {
         return Render.GetScreenSize()[1] / 1080 /* everything scaled by base size on a 1080p monitors */;
     }
+    Math.Lerp = function(min, max, progress) {
+        return min + (max - min) * progress;
+    }
 }
 
 /* Features */{
 
+/* Draw */
+var choke_max = 0;
+var last_choke = 0;
 function red_draw () {
 
     /* Tab Selection Logic */
    // I have been coding this fucking tab system for 5 hours straight, this shit better be mother fucking perfect or im blowing my brains out.
     /* Extra */
     UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Watermark"], 0);
+    UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Clantag"], 0);
     UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Ragebot Monitor"], 0);
     UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Anti-Aim Monitor"], 0);
     UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Flags"], 0);
@@ -102,13 +114,17 @@ function red_draw () {
     UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] LBY"], 0);
     UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Slowwalk"], 0);
 
-    /* UI Vars */
+    /* Config */
+    UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Save Script Settings"], 0);
+    UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Load Script Settings"], 0);
+
+    /* Tab Vars */
     var rage_dt = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Rage] Doubletap Methods"]);
     var aa_level = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Anti-Aim] Anti-Aim Level"]);
     var beg_presets = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Beginner] Anti-Aim Presets"]);
     var beg_slowwalk = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Beginner] Slowwalk Speed"]);
     var int_presets = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Anti-Aim Presets"]);
-    var tabs = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Redefined.js] Tab Selection"])
+    var tabs = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Redefined.js] Tab Selection"]);
 
     /* Quick Anim for Rage Tab */
     switch(rage_dt){
@@ -126,7 +142,6 @@ function red_draw () {
         } break;
     }
 
-
     /* Tab Animations */
     /* We do the Tabs Logic After AA because we want aa only to render if in that tab */
     switch(tabs){
@@ -135,6 +150,7 @@ function red_draw () {
         } break;
         case 1: { /* Extra */
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Watermark"], 1);
+            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Clantag"], 1);
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Ragebot Monitor"], 1);
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Anti-Aim Monitor"], 1);
             UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Flags"], 1);
@@ -216,27 +232,56 @@ function red_draw () {
                 UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] LBY"], 0);
                 UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Slowwalk"], 0);
     }
-    }
-
-            
+             }
         } break;
-
+        case 4: { /* Config */
+            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Save Script Settings"], 1);
+            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "Load Script Settings"], 1);
+            UI.SetEnabled(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Rage - DT] Custom Speed"], 0);
+        } break;
     }
-
 
     /* Variables */
     var watermark = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "Watermark"]);
     var mon_rage = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "Ragebot Monitor"]);
     var mon_aa = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "Anti-Aim Monitor"]);
+    var flags = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "Flags"]);
+    var save_script = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "Save Script Settings"]);
+    var load_script = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "Load Script Settings"]);
+    if (!Globals.ChokedCommands() && last_choke)
+    choke_max = last_choke;
+    last_choke = Globals.ChokedCommands();
 
     /* Watermark */
+    if(watermark){
 
+    }
+
+    /* Clantag */
+    
 
     /* Ragebot Monitor */
 
 
     /* Anti-Aim Monitor */
 
+
+    /* Flags */
+    if(flags){
+        Render.FilledRect(100, 100, Math.Lerp(0, 500, choke_max / 14) * get_dpi_scale(), 150 * get_dpi_scale(), [255, 0, 0, 255]); // Temp Choke Flag
+    }
+
+    /* Config */
+    if(save_script){
+        Cheat.PrintChat("Saved Redefined.Technology Settings \n");
+        Cheat.Print("Saved Redefined.Technology Settings \n");
+        UI.SetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "Save Script Settings"], 0);
+    }
+    if(load_script){
+        Cheat.PrintChat("Loaded Redefined.Technology Settings \n");
+        Cheat.Print("Loaded Redefined.Technology Settings \n");
+        UI.SetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "Load Script Settings"], 0);
+    }
 
 }
 
@@ -253,8 +298,6 @@ function red_createmove () {
     var beg_slowwalk = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Beginner] Slowwalk Speed"]);
     var int_presets = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Anti-Aim Presets"]);
     
-    
-
     /* Rage Logic */
     if(rage_enabled){
 
