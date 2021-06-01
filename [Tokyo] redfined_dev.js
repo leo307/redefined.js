@@ -78,7 +78,7 @@
 
 /* Features */{
 
-    /* Drw */
+    /* Dra */
     var choke_max = 0;
     var last_choke = 0;
     function red_draw() {
