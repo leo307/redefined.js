@@ -337,6 +337,22 @@
         var beg_presets = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Beginner] Anti-Aim Presets"]);
         var beg_slowwalk = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Beginner] Slowwalk Speed"]);
         var int_presets = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Anti-Aim Presets"]);
+        var int_desync = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Custom Desync"]);
+        var pro_fake = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Fake"]);
+        var pro_real = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Real"]);
+        var pro_lby = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] LBY"]);
+        var pro_slow = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Slowwalk"]);
+        var inverted = UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "AA Direction inverter"], "AA Inverter");
+        var movement = UserCMD.GetMovement();
+        var local = Entity.GetLocalPlayer();
+        var weapon_info = Entity.GetCCSWeaponInfo(local);
+        var scoped = Entity.GetProp(local, "CCSPlayer", "m_bIsScoped");
+        var target_speed_norm = (scoped ? weapon_info["max_speed_alt"] : weapon_info["max_speed"]) * (50 / 100.0) * 0.34;
+        var target_speed_slow = (scoped ? weapon_info["max_speed_alt"] : weapon_info["max_speed"]) * (35 / 100.0) * 0.34;
+        var target_speed_slowest = (scoped ? weapon_info["max_speed_alt"] : weapon_info["max_speed"]) * (25 / 100.0) * 0.34;
+        var target_speed_1 = (scoped ? weapon_info["max_speed_alt"] : weapon_info["max_speed"]) * (UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Slowwalk"]) / 100.0) * 0.34;
+        var target_speed_2 = (scoped ? weapon_info["max_speed_alt"] : weapon_info["max_speed"]) * (UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Slowwalk"]) / 100.0) * 0.34;
+        var movement_scale = Math.sqrt(movement[0] * movement[0] + movement[1] * movement[1]);
 
         /* Rage Logic */
         if (rage_enabled) {
@@ -399,17 +415,131 @@
                     break;
                 case 1:
                     { /* Beginner */
+                        switch (beg_presets) {
+                            case 0:
+                                { /* Off */
 
+                                }
+                                break;
+                            case 1:
+                                { /* Apollo */
+                                    AntiAim.SetFakeOffset(inverted ? -28 : 34);
+                                    AntiAim.SetRealOffset(inverted ? -38 : 23);
+                                }
+                                break;
+                            case 2:
+                                { /* Venus */
+                                    AntiAim.SetFakeOffset(inverted ? 22 : -22);
+                                    AntiAim.SetRealOffset(inverted ? -35 : 35);
+                                }
+                                break;
+                            case 3:
+                                { /* Solar */
+                                    AntiAim.SetFakeOffset(inverted ? -2 : 2);
+                                    AntiAim.SetRealOffset(inverted ? 19 : -19);
+                                }
+                                break;
+                        }
+                        switch (beg_slowwalk) {
+                            case 0:
+                                { /* Off */
+
+                                }
+                                break;
+                            case 1:
+                                { /* Normal */
+                                    if (!local || !Entity.IsAlive(local) || !UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "Slow walk"]))
+                                        return;
+                                    if (movement_scale <= 1.1)
+                                        return;
+                                    movement[0] = (movement[0] / movement_scale) * target_speed_norm;
+                                    movement[1] = (movement[1] / movement_scale) * target_speed_norm;
+                                    UserCMD.SetMovement(movement);
+                                    UserCMD.SetButtons(UserCMD.GetButtons() | (1 << 18));
+                                }
+                                break;
+                            case 2:
+                                { /* Slow */
+                                    if (!local || !Entity.IsAlive(local) || !UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "Slow walk"]))
+                                        return;
+                                    if (movement_scale <= 1.1)
+                                        return;
+                                    movement[0] = (movement[0] / movement_scale) * target_speed_slow;
+                                    movement[1] = (movement[1] / movement_scale) * target_speed_slow;
+                                    UserCMD.SetMovement(movement);
+                                    UserCMD.SetButtons(UserCMD.GetButtons() | (1 << 18));
+                                }
+                                break;
+                            case 3:
+                                { /* Slowest */
+                                    if (!local || !Entity.IsAlive(local) || !UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "Slow walk"]))
+                                        return;
+                                    if (movement_scale <= 1.1)
+                                        return;
+                                    movement[0] = (movement[0] / movement_scale) * target_speed_slowest;
+                                    movement[1] = (movement[1] / movement_scale) * target_speed_slowest;
+                                    UserCMD.SetMovement(movement);
+                                    UserCMD.SetButtons(UserCMD.GetButtons() | (1 << 18));
+                                }
+                                break;
+                        }
                     }
                     break;
                 case 2:
                     { /* Intermediate */
+                        switch (int_presets) {
+                            case 0:
+                                { /* Off */
 
+                                }
+                                break;
+                            case 1:
+                                { /* Apollo */
+                                    AntiAim.SetFakeOffset(inverted ? -28 : 34);
+                                    AntiAim.SetRealOffset(inverted ? -38 : 23);
+                                }
+                                break;
+                            case 2:
+                                { /* Venus */
+                                    AntiAim.SetFakeOffset(inverted ? 22 : -22);
+                                    AntiAim.SetRealOffset(inverted ? -35 : 35);
+                                }
+                                break;
+                            case 3:
+                                { /* Solar */
+                                    AntiAim.SetFakeOffset(inverted ? -2 : 2);
+                                    AntiAim.SetRealOffset(inverted ? 19 : -19);
+                                }
+                                break;
+                            case 4:
+                                { /* Custom */
+                                    AntiAim.SetFakeOffset(inverted ? int_desync : -int_desync);
+                                }
+                                break;
+                        }
+                        if (!local || !Entity.IsAlive(local) || !UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "Slow walk"]))
+                            return;
+                        if (movement_scale <= 1.1)
+                            return;
+                        movement[0] = (movement[0] / movement_scale) * target_speed_1;
+                        movement[1] = (movement[1] / movement_scale) * target_speed_1;
+                        UserCMD.SetMovement(movement);
+                        UserCMD.SetButtons(UserCMD.GetButtons() | (1 << 18));
                     }
                     break;
                 case 3:
                     { /* Pro */
-
+                        AntiAim.SetFakeOffset(inverted ? pro_fake : -pro_fake);
+                        AntiAim.SetRealOffset(inverted ? pro_real : -pro_real);
+                        AntiAim.SetLBYOffset(inverted ? pro_lby : -pro_lby);
+                        if (!local || !Entity.IsAlive(local) || !UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "Slow walk"]))
+                            return;
+                        if (movement_scale <= 1.1)
+                            return;
+                        movement[0] = (movement[0] / movement_scale) * target_speed_2;
+                        movement[1] = (movement[1] / movement_scale) * target_speed_2;
+                        UserCMD.SetMovement(movement);
+                        UserCMD.SetButtons(UserCMD.GetButtons() | (1 << 18));
                     }
                     break;
             }
