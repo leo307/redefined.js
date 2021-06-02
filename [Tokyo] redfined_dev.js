@@ -1,4 +1,4 @@
-/* Made by Tokyo */
+/* Authored by Tokyo#6190 | ses#*/
 
 /* Init UI */
 {
@@ -325,6 +325,7 @@
 
     }
 
+    /* Create Move */
     function red_createmove() {
 
         /* Variables */
@@ -366,12 +367,13 @@
                     break;
                 case 1:
                     { /* Aggresive */
-
+                        Exploit.ForceRecharge();
                     }
                     break;
                 case 2:
                     { /* Smart */
-
+                        /* Logic is missing but essentially put a 200ms delay on recharge after shot here | for now we use automatic - Tokyo */
+                        Exploit.EnableRecharge();
                     }
                     break;
             }
@@ -385,12 +387,14 @@
                     break;
                 case 1:
                     { /* Smart */
-
+                        Exploit.OverrideTolerance(1);
+                        Exploit.OverrideShift(15);
                     }
                     break;
                 case 2:
                     { /* Express */
-
+                        Exploit.OverrideTolerance(0);
+                        Exploit.OverrideShift(16);
                     }
                     break;
                 case 3:
@@ -549,8 +553,19 @@
 
 }
 
+/* Unload */
+{
+    function red_unload() {
+        AntiAim.SetOverride(0);
+        Cheat.PrintColor([255, 215, 0, 255], "Hope to see you back soon!\n");
+        Cheat.PrintChat("Hope to see you back soon!\n");
+
+    }
+}
+
 /* Callbacks */
 {
     Cheat.RegisterCallback("Draw", "red_draw");
     Cheat.RegisterCallback("CreateMove", "red_createmove");
+    Cheat.RegisterCallback("Unload", "red_unload");
 }
