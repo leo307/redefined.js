@@ -342,7 +342,6 @@
         var pro_fake = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Fake"]);
         var pro_real = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Real"]);
         var pro_lby = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] LBY"]);
-        var pro_slow = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Slowwalk"]);
         var inverted = UI.GetValue(["Rage", "Anti Aim", "General", "Key assignment", "AA Direction inverter"], "AA Inverter");
         var movement = UserCMD.GetMovement();
         var local = Entity.GetLocalPlayer();
