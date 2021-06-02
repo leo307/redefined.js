@@ -297,7 +297,7 @@
 
         /* Clantag */
         if (clantag) {
-            Local.SetClanTag("redefined");
+            Local.SetClanTag("redefined.technology");
         }
 
         /* Ragebot Monitor */
