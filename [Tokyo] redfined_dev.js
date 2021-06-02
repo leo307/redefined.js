@@ -1,4 +1,4 @@
-/* Authored by Tokyo#6190 | ses#*/
+/* Authored by Tokyo#6190 | ses#1997 | fengyi#9999 | Source Code Belongs to Redefined.Technology and should not be shared unless agreed upon by all current developers.*/
 
 /* Init UI */
 {
