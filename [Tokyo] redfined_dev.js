@@ -22,6 +22,8 @@
     UI.AddSliderInt(["Misc.", "[Redefined.js]", "[Redefined.js]", ], "[Rage - DT] Custom Speed", 1, 16);
     UI.AddSliderInt(["Misc.", "[Redefined.js]", "[Redefined.js]", ], "[Rage] Visible Minimum Damage", 1, 100);
     UI.AddSliderInt(["Misc.", "[Redefined.js]", "[Redefined.js]", ], "[Rage] Autowall Minimum Damage", 1, 100);
+    UI.AddHotkey(["Misc.", "Keys", "Key assignment"], "[Redefined.js] Min Damage Visible", "Visible Min Damage");
+    UI.AddHotkey(["Misc.", "Keys", "Key assignment"], "[Redefined.js] Min Damage Autowall", "Autowall Min Damage");
 
     /* Anti-Aim */
     UI.AddCheckbox(["Misc.", "[Redefined.js]", "[Redefined.js]"], "[Redefined] Anti-Aim Enabled");
@@ -284,6 +286,7 @@
         var mon_rage = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "Ragebot Monitor"]);
         var mon_aa = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "Anti-Aim Monitor"]);
         var flags = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "Flags"]);
+        var clantag = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "Clantag"]);
         var save_script = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "Save Script Settings"]);
         var load_script = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "Load Script Settings"]);
         if (!Globals.ChokedCommands() && last_choke)
@@ -297,7 +300,7 @@
 
         /* Clantag */
         if (clantag) {
-            Local.SetClanTag("redefined.technology");
+            Local.SetClanTag("redefined");
         }
 
         /* Ragebot Monitor */
@@ -353,9 +356,22 @@
         var target_speed_1 = (scoped ? weapon_info["max_speed_alt"] : weapon_info["max_speed"]) * (UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Intermediate] Slowwalk"]) / 100.0) * 0.34;
         var target_speed_2 = (scoped ? weapon_info["max_speed_alt"] : weapon_info["max_speed"]) * (UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[AA - Pro] Slowwalk"]) / 100.0) * 0.34;
         var movement_scale = Math.sqrt(movement[0] * movement[0] + movement[1] * movement[1]);
+        var enemies = Entity.GetEnemies();
+        var min_dmg_visible = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Rage] Visible Minimum Damage"]);
+        var min_dmg_autowall = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Rage] Autowall Minimum Damage"]);
+
 
         /* Rage Logic */
         if (rage_enabled) {
+
+            /* Min Damage's On Key Visible */
+            if (!UI.GetValue(["Misc.", "Keys", "Key assignment", "[Redefined.js] Min Damage Visible"]))
+                return;
+            enemies.forEach(function(enemy) {
+                if (Entity.IsAlive(enemy) && !Entity.IsDormant(enemy)) {
+                    Ragebot.ForceTargetMinimumDamage(enemy, min_dmg_visible);
+                }
+            });
 
             /* Recharge Methods */
             switch (rage_charge) {
