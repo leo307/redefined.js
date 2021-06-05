@@ -1,4 +1,5 @@
-/* Authored by Tokyo#6190 | ses#1997 | fengyi#9999 | Source Code Belongs to Redefined.Technology and should not be shared unless agreed upon by all current developers.*/
+/* Authored by Tokyo#6190 | ses#1997 | fengyi#9999 | Source Code Belongs to Redefined.Technology and should not be shared unless agreed upon by all current developers. */
+/* Current Bugs - None :) | Priority - ! */
 
 /* Init UI */
 {
@@ -363,15 +364,6 @@
 
         /* Rage Logic */
         if (rage_enabled) {
-
-            /* Min Damage's On Key Visible */
-            if (!UI.GetValue(["Misc.", "Keys", "Key assignment", "[Redefined.js] Min Damage Visible"]))
-                return;
-            enemies.forEach(function(enemy) {
-                if (Entity.IsAlive(enemy) && !Entity.IsDormant(enemy)) {
-                    Ragebot.ForceTargetMinimumDamage(enemy, min_dmg_visible);
-                }
-            });
 
             /* Recharge Methods */
             switch (rage_charge) {
