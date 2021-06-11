@@ -360,10 +360,26 @@
         var enemies = Entity.GetEnemies();
         var min_dmg_visible = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Rage] Visible Minimum Damage"]);
         var min_dmg_autowall = UI.GetValue(["Misc.", "[Redefined.js]", "[Redefined.js]", "[Rage] Autowall Minimum Damage"]);
+        var min_dmg_visible_key = UI.GetValue(["Misc.", "Keys", "Key assignment", "[Redefined.js] Min Damage Visible"]);
+        var min_dmg_autowall_key = UI.GetValue(["Misc.", "Keys", "Key assignment", "[Redefined.js] Min Damage Autowall"]);
 
 
         /* Rage Logic */
         if (rage_enabled) {
+
+            /* Minimum Damage Visible */
+            if (min_dmg_visible_key) {
+                enemies.forEach(function(enemy) {
+                    if (Entity.IsAlive(enemy) && !Entity.IsDormant(enemy)) {
+                        Ragebot.ForceTargetMinimumDamage(enemy, min_dmg_visible);
+                    }
+                });
+            }
+
+            /* Minimum Damage Autowall */
+            if (min_dmg_autowall_key) {
+
+            }
 
             /* Recharge Methods */
             switch (rage_charge) {
@@ -379,7 +395,8 @@
                     break;
                 case 2:
                     { /* Smart */
-                        setTimeout(Exploit.ForceRecharge(), 200);
+                        /* setTimeout(Exploit.ForceRecharge(), 200); */
+                        Exploit.EnableRecharge();
                     }
                     break;
             }
