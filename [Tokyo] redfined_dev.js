@@ -374,13 +374,12 @@
                     break;
                 case 1:
                     { /* Aggresive */
-                        Exploit.ForceRecharge();
+                        Exploit.EnableRecharge();
                     }
                     break;
                 case 2:
                     { /* Smart */
-                        /* Logic is missing but essentially put a 200ms delay on recharge after shot here | for now we use automatic - Tokyo */
-                        Exploit.EnableRecharge();
+                        setTimeout(Exploit.ForceRecharge(), 200);
                     }
                     break;
             }
